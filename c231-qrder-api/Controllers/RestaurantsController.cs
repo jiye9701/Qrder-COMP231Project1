@@ -33,9 +33,9 @@ namespace c231_qrder.Controllers
             {
                 resultRestaurantDtos = await restaurantsService.GetAllAsync();
             }
-            catch (AmazonServiceException)
+            catch (AmazonServiceException ase)
             {
-                return StatusCode(500, "A problem happend while processing the request from the remote server.");
+                return StatusCode(500, $"{ase.Message}");
             }
             catch
             {

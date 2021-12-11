@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using ServiceStack.Configuration;
 
 namespace c231_qrder
 {
@@ -29,6 +30,7 @@ namespace c231_qrder
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<AppSettings>(Configuration.GetSection("AwsSettings"));
             // automapper
             services.AddAutoMapper(typeof(Startup));
 
@@ -40,8 +42,17 @@ namespace c231_qrder
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Qrder API", Version = "v1" });
             });
 
-            // dynamoDB
+            // DynamoDB
+            services.AddDefaultAWSOptions(new AWSOptions
+            {
+                Region = Amazon.RegionEndpoint.USEast2,
+                Credentials = new BasicAWSCredentials(
+                    "AKIAQMYSAU7IXUYO4L6N",
+                    "nhluBX9Uk35FQSXqKq6ZlUrxGFcF8ddpfJNnSG5K"
+                    )
+            });
             services.AddAWSService<IAmazonDynamoDB>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
