@@ -36,7 +36,6 @@ namespace c231_qrder
 
             services.AddControllers();
 
-
             // swagger
             services.AddSwaggerGen(c =>
             {
