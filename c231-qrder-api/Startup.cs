@@ -31,6 +31,7 @@ namespace c231_qrder
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<AppSettings>(Configuration.GetSection("AwsSettings"));
+
             // automapper
             services.AddAutoMapper(typeof(Startup));
 
